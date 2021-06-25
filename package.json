@@ -2,6 +2,10 @@
   "name": "personal-dashboard",
   "version": "8.0.0",
   "license": "",
+  "engines" : {
+	  "node": "~12.14.1",
+	  "npm" : "~6.13.4"
+  }
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
