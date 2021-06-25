@@ -1,0 +1,126 @@
+<div *ngIf="weatherData">
+
+  <!-- Hourly Chart -->
+  <div class="row justify-content-center">
+    <div class="col col-md-12">
+      <div class="card">
+
+        <div class="card-header text-center">
+          <h4 class="card-title font-weight-bold">
+            HOURLY FORECAST
+          </h4>
+        </div>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="chart-info mb-3 ml-3">
+              <span class="d-inline-block rounded-circle mr-1 ml-2" style="width:15px; height:15px; background-image: linear-gradient(#FF4F4E, #6DE0FA)">
+
+              </span> Temperatures
+            </div>
+            <div>
+
+              <apx-chart [series]="hourlyChartOptions.series"
+                         [chart]="hourlyChartOptions.chart"
+                         [xaxis]="hourlyChartOptions.xAxis"
+                         [tooltip]="hourlyChartOptions.tooltip"
+                         [fill]="hourlyChartOptions.fill"
+                         [colors]="hourlyChartOptions.colors"
+              >
+              </apx-chart>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Chart -->
+  <div class="row justify-content-center">
+    <div class="col col-md-12">
+      <div class="card">
+
+        <div class="card-header text-center">
+          <h4 class="card-title font-weight-bold">
+            DAILY FORECAST
+          </h4>
+        </div>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="chart-info mb-3 ml-3">
+              <span class="d-inline-block rounded-circle mr-1 ml-2" style="width:15px; height:15px; background-image: linear-gradient(#FF4F4E, #6DE0FA)">
+
+              </span> Temperatures
+            </div>
+            <div>
+
+              <apx-chart [series]="dailyChartOptions.series"
+                         [chart]="dailyChartOptions.chart"
+                         [xaxis]="dailyChartOptions.xAxis"
+                         [tooltip]="dailyChartOptions.tooltip"
+                         [fill]="dailyChartOptions.fill"
+                         [colors]="dailyChartOptions.colors"
+              >
+              </apx-chart>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historical Chart -->
+  <div class="row justify-content-start mt-3">
+    <div ngbDropdown container="body">
+      <button class="btn btn-outline-primary" ngbDropdownToggle>{{selectedDateText}}</button>
+      <div ngbDropdownMenu>
+        <button ngbDropdownItem *ngFor="let timestamp of timestamps ; index as index" (click)="dateChanged(index)">
+          {{momentFunction(timestamp).format('Do MMM YYYY').toString()}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col col-md-12">
+      <div class="card">
+
+        <div class="card-header text-center">
+          <h4 class="card-title font-weight-bold">
+            HISTORICAL DATA
+          </h4>
+        </div>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="chart-info mb-3 ml-3">
+              <span class="d-inline-block rounded-circle mr-1 ml-2" style="width:15px; height:15px; background-image: linear-gradient(#FF4F4E, #6DE0FA)">
+
+              </span> Temperatures
+            </div>
+            <div>
+
+              <apx-chart [series]="historicalChartOptions.series"
+                         [chart]="historicalChartOptions.chart"
+                         [xaxis]="historicalChartOptions.xAxis"
+                         [tooltip]="historicalChartOptions.tooltip"
+                         [fill]="historicalChartOptions.fill"
+                         [colors]="historicalChartOptions.colors"
+                         [noData]="historicalChartOptions.noData"
+                         [yaxis]="historicalChartOptions.yAxis"
+              >
+              </apx-chart>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

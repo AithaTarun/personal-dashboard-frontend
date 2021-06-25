@@ -1,0 +1,273 @@
+<div *ngIf="authService.getIsAuth()">
+  <div class="row justify-content-md-center text-center">
+    <div class="col col-md-12 col-lg-6">
+      <form (submit)="onLocationEntered()" action="" [formGroup]="form">
+
+        <!--Location-->
+        <div class="form-group position-relative has-icon-right">
+          <label for="location" class="font-weight-bold">Location</label>
+
+          <div class="position-relative has-icon-left">
+
+            <div class="input-group">
+
+              <ng-template #rt let-r="result" let-t="term">
+
+                <div class="row text-center">
+                  <div class="col col-md-8">
+                    <div class="row">
+                      <div class="col col-md-12 overflow-hidden">
+                        <h4 class="font-weight-bold" style="font-family: Orbitron,serif">{{r.locationName}}</h4>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col col-md-12">
+                        <p>{{r.description}}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col col-md-2" style="margin-top: auto ; margin-bottom: auto">
+                    <h3 class="font-weight-bold" style="font-family: Orbitron, serif">{{r.temperature}} <span>&#8451;</span></h3>
+                  </div>
+
+                  <div class="col col-md-2">
+                    <img [src]="r.weatherConditionIcon" alt="" style="width: 64px; height: 64px">
+                  </div>
+                </div>
+
+              </ng-template>
+
+              <div class="input-group-prepend rounded">
+                <!-- Current location -->
+                <button class="btn btn-round btn-outline-info" (click)="fetchCurrentLocationWeather()" ngbTooltip="Current location">
+                  <i class="ft ft-map-pin">
+                  </i>
+                </button>
+              </div>
+
+              <input type="text" id="location" class="form-control round"
+                     formControlName="location" placeholder="Enter your location here"
+                     [ngbTypeahead]="getTypeahead()"
+                     [resultTemplate]="rt"
+              >
+
+              <div class="input-group-append rounded">
+                  <!-- Fetch -->
+                  <button class="btn btn-round btn-outline-primary" [disabled]="form.invalid" (click)="onLocationEntered()">
+                    <i class="icon-rocket mr-1">
+                    </i>
+                    Fetch
+                  </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="text-center" *ngIf="!locationData">
+    <img src="assets/img/ico/weather/invalidLocation.png" alt="" style="width: 256px ; height: 256px">
+    <h2 class="text-danger font-weight-bolder">Please provide the location</h2>
+  </div>
+  
+  <div class="text-center" *ngIf="locationData && !weatherData">
+    <img src="assets/img/loaders/WeatherLoading.gif" alt="">
+  </div>
+
+    <div class="" *ngIf="weatherData">
+
+      <!-- Current weather forecast -->
+      <div class="text-white container jumbotron py-2 rounded"
+           [ngStyle]="{'background-image': 'url(assets/img/backgrounds/' + weatherData.current.weather[0].icon + '.jpg)'}"
+           style="background-size: cover; background-position: center bottom"
+      >
+
+        <!-- Time -->
+        <div class="row">
+          <div class="ml-auto" ngbTooltip="Current time">
+            <h4 class="font-weight-bold mb-auto" style="float: left; margin-right: 10px ; margin-top: 5px">
+              {{momentFunction.unix(this.weatherData.current.dt).utc().utcOffset(this.weatherData.timezone_offset).tz(this.weatherData.timezone).format('h:mm A')}}
+            </h4>
+
+            <img src="assets/img/ico/weather/time.png" style="width: 35px; height: 35px" alt="">
+          </div>
+
+        </div>
+
+        <!-- Location name, temperature, feels like, and description-->
+        <div class="row font-weight-bold mt-2">
+
+          <div class="col col-md-6" style="margin-top: auto ; margin-bottom: auto">
+            <h3 class="font-weight-bold overflow-hidden" style="font-family: Orbitron,serif; max-height: 155px">
+              {{locationData.features[0].place_name}}
+            </h3>
+          </div>
+
+          <div class="col col-md-3">
+            <div class="row justify-content-center mb-1">
+              <div class="d-flex justify-content-center" ngbTooltip="Temperature">
+                <img [src]="weatherData.current.temp <= 15 ? 'assets/img/ico/weather/coldTemperature.png' : weatherData.current.temp <= 29 ? 'assets/img/ico/weather/coldTemperature.png' : 'assets/img/ico/weather/hotTemperature.png'"
+                     style="width: 64px; height: 64px; float: left">
+                <h5 class="font-weight-bold mt-auto mb-auto ml-2">{{weatherData.current.temp | number: '2.2'}} <span>&#8451;</span></h5>
+              </div>
+
+            </div>
+
+            <div class="row justify-content-center mt-1">
+              <div class="d-flex justify-content-center" ngbTooltip="Feels like">
+                <img src="assets/img/ico/weather/feels_like.png"
+                     style="width: 64px; height: 64px; float: left">
+                <h5 class="font-weight-bold mt-auto mb-auto ml-2">{{weatherData.current.feels_like | number: '2.2'}} <span>&#8451;</span></h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-md-3">
+            <div class="row d-flex justify-content-center">
+              <img [src]="'assets/img/ico/weather/conditions/' + weatherData.current.weather[0].icon + '.png'" alt=""
+                   style="width: 128px; height: 128px; margin-top: auto; margin-bottom: auto">
+            </div>
+            <div class="row d-flex justify-content-center">
+              <h4 style="margin: auto; font-style: italic" class="overflow-hidden">{{weatherData.current.weather[0].description | titlecase}}</h4>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sunrise, Sunset -->
+        <div class="row mt-3 justify-content-between">
+          <div class="col col-md-6">
+            <div class="d-flex justify-content-center" ngbTooltip="Sunrise">
+              <img src="assets/img/ico/weather/sunrise.png" style="width: 64px; height: 64px">
+              <h5 class="font-weight-bold mt-auto mb-auto ml-2">
+                {{momentFunction.unix(this.weatherData.current.sunrise).utc().utcOffset(this.weatherData.timezone_offset).tz(this.weatherData.timezone).format('h:mm A')}}
+              </h5>
+            </div>
+          </div>
+          <div class="col col-md-6">
+            <div class="d-flex justify-content-center" ngbTooltip="Sunset">
+              <img src="assets/img/ico/weather/sunset.png" style="width: 64px; height: 64px">
+              <h5 class="font-weight-bold mt-auto mb-auto ml-2">
+                {{momentFunction.unix(this.weatherData.current.sunset).utc().utcOffset(this.weatherData.timezone_offset).tz(this.weatherData.timezone).format('h:mm A')}}
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Current weather conditions -->
+        <div class="row mt-3 justify-content-between">
+
+          <!-- Pressure -->
+          <div class="col col-md-1" ngbTooltip="Atmospheric pressure">
+            <div class="row d-flex justify-content-center mb-1">
+              <img src="assets/img/ico/weather/atmosphericPressure.png" style="width: 64px; height: 64px">
+            </div>
+            <div class="row d-flex justify-content-center mt-1">
+              <h5 class="font-weight-bold">
+                {{this.weatherData.current.pressure}} hPa
+              </h5>
+            </div>
+          </div>
+
+          <!-- Humidity -->
+          <div class="col col-md-1" ngbTooltip="Humidity">
+            <div class="row d-flex justify-content-center mb-1">
+              <img src="assets/img/ico/weather/humidity.png" style="width: 64px; height: 64px">
+            </div>
+            <div class="row d-flex justify-content-center mt-1">
+              <h5 class="font-weight-bold">
+                {{this.weatherData.current.humidity}} %
+              </h5>
+            </div>
+          </div>
+
+          <!-- Dew point -->
+          <div class="col col-md-1" ngbTooltip="Dew point">
+            <div class="row d-flex justify-content-center mb-1">
+              <img src="assets/img/ico/weather/dew_point.png" style="width: 64px; height: 64px">
+            </div>
+            <div class="row d-flex justify-content-center mt-1">
+              <h5 class="font-weight-bold">
+                {{this.weatherData.current.dew_point}} <span>&#8451;</span>
+              </h5>
+            </div>
+          </div>
+
+          <!-- Cloudiness -->
+          <div class="col col-md-1" ngbTooltip="Cloudiness">
+            <div class="row d-flex justify-content-center mb-1">
+              <img src="assets/img/ico/weather/cloudiness.png" style="width: 64px; height: 64px">
+            </div>
+            <div class="row d-flex justify-content-center mt-1">
+              <h5 class="font-weight-bold">
+                {{this.weatherData.current.clouds}} %
+              </h5>
+            </div>
+          </div>
+
+          <!-- UV -->
+          <div class="col col-md-1" ngbTooltip="UV Index">
+            <div class="row d-flex justify-content-center mb-1">
+              <img src="assets/img/ico/weather/uv.png" style="width: 64px; height: 64px">
+            </div>
+            <div class="row d-flex justify-content-center mt-1">
+              <h5 class="font-weight-bold">
+                {{this.weatherData.current.uvi}}
+              </h5>
+            </div>
+          </div>
+
+          <!-- Average visibility -->
+          <div class="col col-md-1" ngbTooltip="Average visibility">
+            <div class="row d-flex justify-content-center mb-1">
+              <img src="assets/img/ico/weather/visibility.png" style="width: 64px; height: 64px">
+            </div>
+            <div class="row d-flex justify-content-center mt-1">
+              <h5 class="font-weight-bold">
+                {{this.weatherData.current.visibility}} m
+              </h5>
+            </div>
+          </div>
+
+          <!-- Wind speed -->
+          <div class="col col-md-1" ngbTooltip="Wind speed">
+            <div class="row d-flex justify-content-center mb-1">
+              <img src="assets/img/ico/weather/wind.png" style="width: 64px; height: 64px">
+            </div>
+            <div class="row d-flex justify-content-center mt-1">
+              <h5 class="font-weight-bold">
+                {{this.weatherData.current.wind_speed}} m/s
+              </h5>
+            </div>
+          </div>
+
+          <!-- Wind Direction -->
+          <div class="col col-md-1" ngbTooltip="Wind direction">
+            <div class="row d-flex justify-content-center mb-1">
+              <img src="assets/img/ico/weather/wind_direction.png" style="width: 64px; height: 64px">
+            </div>
+            <div class="row d-flex justify-content-center mt-1">
+              <h5 class="font-weight-bold">
+                {{this.weatherData.current.wind_deg}} <span>&#176;</span>
+              </h5>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <hr class="mx-4" style="border: 1px solid aquamarine"/>
+
+    </div>
+
+  <app-charts>
+
+  </app-charts>
+
+</div>
+

@@ -1,0 +1,17 @@
+<div class="row justify-content-center">
+
+  <app-file-item
+          *ngFor="let file of files | slice : (currentPage - 1) * fileItemsPerPage : (currentPage-1) * fileItemsPerPage + fileItemsPerPage ;
+        let i = index" [file]="file" class="m-2"
+  >
+  </app-file-item>
+
+</div>
+
+<div class="row">
+  <div class="col-12 justify-content-center mt-2">
+    <ngb-pagination [collectionSize]="files.length" [(page)]="currentPage" [pageSize]="fileItemsPerPage" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+    </ngb-pagination>
+  </div>
+</div>
+

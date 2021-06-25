@@ -1,0 +1,65 @@
+<div class="card rounded mb-3 text-center align-content-center" style="width: 250px ; height: 260px">
+
+  <div class="card-header bg-transparent font-weight-bolder text-primary overflow-hidden" [ngbTooltip]="file.fileName" style="height: 66px">
+    {{file.fileName}}
+  </div>
+
+  <div class="card-body text-info p-0">
+
+    <div [ngbPopover]="fileInfoContent" [popoverTitle]="popoverTitle" triggers="mouseenter:mouseleave" container="body" style="max-width: 500px">
+      <img [src]="fileIconPath" style="width: 128px ; height: 128px" alt="File">
+    </div>
+
+    <ng-template #popoverTitle>
+      <span class="font-weight-bold">File info</span>
+    </ng-template>
+
+    <ng-template #fileInfoContent>
+    <span class="font-weight-bold">
+      <span class="text-secondary">File size : </span> <span class="text-danger">({{file.originalFileSize / 1024 / 1024 | number : '.2'}} MB)</span>
+      <span class="text-dark"><i class="ft-arrow-right mx-1"></i></span>
+      <span class="text-info">({{file.compressedFileSize / 1024 / 1024 | number : '.2'}} MB)</span>
+    </span>
+
+      <hr style="margin: 4px ; border: 1px solid turquoise"/>
+
+    <span class="font-weight-bold">
+      <span class="text-secondary">Uploaded on : </span> <span class="text-warning">{{file.createdAt | date:'MMMM d, y, h:mm a'}}</span>
+    </span>
+
+    <hr style="margin: 4px ; border: 1px solid turquoise"/>
+
+    <span class="font-weight-bold">
+      <span class="text-secondary">File type : </span> <span class="text-primary">{{file.fileType}}</span>
+    </span>
+    </ng-template>
+
+  </div>
+
+  <div class="card-footer bg-transparent font-weight-bolder no-border text-center pt-0">
+    <hr style="width: 80% ; border: 1px solid lightseagreen"/>
+
+    <div ngbDropdown placement="auto" container="body" style="margin-top: -10px">
+      <a class="position-relative" id="fileOptions" ngbDropdownToggle>
+        <img src="assets/img/ico/fileManagement/options.png" alt="Options" style="width: 32px ; height: 32px">
+      </a>
+
+      <div ngbDropdownMenu>
+          <a class="dropdown-item border-bottom info" (click)="onDownload(file.fileName, file.fileType)">
+              <i class="ft-download mr-2"></i>
+              <span>Download</span>
+          </a>
+        <a class="dropdown-item border-bottom warning">
+          <i class="ft-share-2 mr-2"></i>
+          <span>Share</span>
+        </a>
+        <a class="dropdown-item danger" (click)="onDelete(file.fileName)">
+          <i class="icon-trash mr-2"></i>
+          <span>Remove</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>

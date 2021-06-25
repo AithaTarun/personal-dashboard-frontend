@@ -1,0 +1,17 @@
+<div [class]="classText">
+  <h4 class="modal-title font-weight-bold white">{{headerText}}</h4>
+  <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+    <span>&times;</span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <p class="text-info font-weight-bold">{{content}}</p>
+</div>
+<div class="modal-footer">
+  <button
+          type="button"
+          class="btn btn-outline-info btn-round"
+          (click)="activeModal.close('Close click')">
+    Ok
+  </button>
+</div>

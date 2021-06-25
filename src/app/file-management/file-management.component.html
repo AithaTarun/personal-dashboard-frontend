@@ -1,0 +1,115 @@
+<!-- File statistics -->
+
+<div class="row text-left">
+
+    <!-- Documents -->
+    <div class="col-xl-3 col-lg-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="px-3 py-3">
+                    <div class="media">
+                        <div class="media-body text-left">
+                            <h3 class="mb-1 info">{{documentsSize / 1024 / 1024 | number: '.2'}} MB</h3>
+                            <p class="mb-1 secondary">{{originalDocumentsSize / 1024 / 1024 | number: '.2'}} MB</p>
+                            <span>Documents / Others</span>
+                        </div>
+                        <div class="media-right align-self-center">
+                            <img src="assets/img/ico/fileManagement/document.png"
+                                 alt="Document" style="height: 64px ; width: 64px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Images -->
+    <div class="col-xl-3 col-lg-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="px-3 py-3">
+                    <div class="media">
+                        <div class="media-body text-left">
+                            <h3 class="mb-1 success">{{imagesSize / 1024 / 1024 | number: '.2'}} MB</h3>
+                            <p class="mb-1 secondary">{{originalImagesSize / 1024 / 1024 | number: '.2'}} MB</p>
+                            <span>Images</span>
+                        </div>
+                        <div class="media-right align-self-center">
+                            <img src="assets/img/ico/fileManagement/picture.png"
+                                 alt="Document" style="height: 64px ; width: 64px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio -->
+    <div class="col-xl-3 col-lg-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="px-3 py-3">
+                    <div class="media">
+                        <div class="media-body text-left">
+                            <h3 class="mb-1 warning">{{audiosSize / 1024 / 1024 | number: '.2'}} MB</h3>
+                            <p class="mb-1 secondary">{{originalAudiosSize / 1024 / 1024 | number: '.2'}} MB</p>
+                            <span>Audios</span>
+                        </div>
+                        <div class="media-right align-self-center">
+                            <img src="assets/img/ico/fileManagement/music.png"
+                                 alt="Document" style="height: 64px ; width: 64px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video -->
+    <div class="col-xl-3 col-lg-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="px-3 py-3">
+                    <div class="media">
+                        <div class="media-body text-left">
+                            <h3 class="mb-1 danger">{{videosSize / 1024 / 1024 | number: '.2'}} MB</h3>
+                            <p class="mb-1 secondary">{{originalVideosSize / 1024 / 1024 | number: '.2'}} MB</p>
+                            <span>Videos</span>
+                        </div>
+                        <div class="media-right align-self-center">
+                            <img src="assets/img/ico/fileManagement/video.png"
+                                 alt="Document" style="height: 64px ; width: 64px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row justify-content-md-center text-center">
+
+    <div class="col col-md-auto">
+        <a href="" [routerLink]="['upload']">
+            <img src="assets/img/ico/fileManagement/upload.png"
+                 alt="Document" style="height: 64px ; width: 64px">
+        </a>
+    </div>
+
+</div>
+
+<hr/>
+
+<div class="row justify-content-md-center" *ngIf="files.length === 0">
+    <div class="col col-md-auto text-center">
+        <img src="assets/img/ico/fileManagement/empty.png" alt="No files in the storage" style="height: 256px ; width: 256px">
+        <h2 class="text-danger font-weight-bolder">No files in your storage</h2>
+    </div>
+</div>
+
+<div *ngIf="files.length !== 0">
+    <app-file-list [files]="files">
+
+    </app-file-list>
+</div>

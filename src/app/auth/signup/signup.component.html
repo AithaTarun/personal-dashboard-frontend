@@ -1,0 +1,152 @@
+<section id="registration">
+  <div class="container-fluid">
+
+    <div class="row full-height-vh m-0">
+
+      <a href="" [routerLink] = "['/']">
+        <img src="../../../assets/img/ico/back.png" alt="back"
+             style="width: 32px ; height: 32px ; margin-left: 10px ; margin-top: 10px"
+             class="font-weight-bold" placement="right" ngbTooltip="Go back"
+        >
+      </a>
+
+      <div class="col-12 d-flex align-items-center justify-content-center" style="margin-bottom: 6.3%">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body register-img">
+              <div class="row m-0 align-items-end">
+                <div class="col-lg-6 d-none d-lg-block text-center p-0">
+                  <img
+                          src="../../../assets/img/gallery/register.png"
+                          alt=""
+                          class="img-fluid"
+                  />
+                </div>
+                <div class="col-lg-6 col-md-12 pt-3 px-4 bg-white text-center">
+
+                  <h4 class="card-title mb-2 font-weight-bold">Create Account</h4>
+                  <p class="card-text mb-3">
+                    Fill the below form to create a new account.
+                  </p>
+
+                  <form (submit)="onSignup()" action="" [formGroup]="form" (change)="onFormChange()">
+
+                      <!--Username-->
+                    <div class="form-group position-relative has-icon-right">
+                      <label for="username" class="font-weight-bold">Username</label>
+
+                      <div class="position-relative has-icon-left">
+
+                        <input type="text" id="username" class="form-control round"
+                               formControlName="username" placeholder="Username">
+
+                        <div class="form-control-position">
+                          <i class="ft-user danger"></i>
+                        </div>
+                        <p id="usernameError" class="text-danger" *ngIf = "form.get('username').invalid && form.get('username').touched">
+                          {{usernameError}}
+                        </p>
+
+                      </div>
+                    </div>
+
+                      <!--Password-->
+                    <div class="form-group position-relative has-icon-right">
+                      <label for="password" class="font-weight-bold">Password</label>
+
+                      <div class="position-relative has-icon-left">
+
+                        <input type="password" id="password" class="form-control round"
+                               formControlName="password" placeholder="Password">
+
+                        <div class="form-control-position">
+                          <i class="icon-key primary"></i>
+                        </div>
+                        <p id="passwordError" class="text-danger" *ngIf = "form.get('password').invalid && form.get('password').touched">{{passwordError}}</p>
+
+                      </div>
+                    </div>
+
+                      <!--Confirm password-->
+                      <div class="form-group position-relative has-icon-right">
+                      <label for="confirmPassword" class="font-weight-bold">Confirm Password</label>
+
+                      <div class="position-relative has-icon-left">
+
+                        <input type="password" id="confirmPassword" class="form-control round"
+                               formControlName="confirmPassword" placeholder="Confirm Password">
+
+                        <div class="form-control-position">
+                          <i class="icon-flag warning"></i>
+                        </div>
+                        <p id="confirmPasswordError" class="text-danger"
+                           *ngIf = "form.get('password').value != form.get('confirmPassword').value && form.get('confirmPassword').touched && form.get('password').touched">
+                          {{confirmPasswordError}}
+                        </p>
+                      </div>
+                    </div>
+
+                      <!--Email-->
+                      <div class="form-group position-relative has-icon-right">
+                      <label for="email" class="font-weight-bold">Email</label>
+
+                      <div class="position-relative has-icon-left">
+
+                        <input type="email" id="email" class="form-control round"
+                               formControlName="email" placeholder="Email">
+
+                        <div class="form-control-position">
+                          <i class="ft-mail success"></i>
+                        </div>
+                        <p id="emailError" class="text-danger" *ngIf = "form.get('email').invalid && form.get('email').touched">{{emailError}}</p>
+
+                      </div>
+                    </div>
+
+                      <!--Date of birth-->
+                      <div class="form-group position-relative has-icon-right">
+                      <label for="dob" class="font-weight-bold">Date of birth</label>
+
+                      <div class="position-relative has-icon-left">
+
+                          <div class="form-control-position">
+                              <i class="ft-calendar success"></i>
+                          </div>
+
+                        <div class="input-group">
+                          <input class="form-control" placeholder="dd/mm/yyyy"
+                                 id="dob" ngbDatepicker #d2="ngbDatepicker" formControlName="dob">
+
+                            <div class="input-group-append">
+                                <div class="input-group-text" (click)="d2.toggle()">
+                                    <i class="fa fa-calendar" style="cursor: pointer"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <p id="dobError" class="text-danger" *ngIf = "form.get('dob').invalid && form.get('dob').touched">
+                          {{dobError}}
+                        </p>
+
+                      </div>
+                    </div>
+
+                      <!--Submit-->
+                      <div class="text-center">
+                      <button [disabled]="form.invalid" type="submit" [ngClass]="form.invalid ? 'btn btn-secondary' : 'btn btn-raised gradient-mint white'">Sign up</button>
+                    </div>
+
+                  </form>
+
+                  <p>Already on personal dashboard ? <a [routerLink]="['/auth', 'login']">Sign in</a></p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
