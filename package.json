@@ -90,7 +90,7 @@
     "sweetalert2": "8.11.6",
     "tslib": "1.9.3",
     "videogular2": "6.4.0",
-    "web-animations-js": "github:angular/web-animations-js#release_pr208",
+    "web-animations-js": "2.3.2",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
