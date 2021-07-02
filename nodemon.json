@@ -1,11 +1,11 @@
 {
   "env":
   {
-    "SENDGRID_API_KEY" : "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",
+    "SENDGRID_API_KEY" : "",
     "JWT_KEY" : "secretKey",
     "FRONT_END_URL" : "http://localhost:4200",
     "MONGO_DB_URL" : "mongodb://127.0.0.1:27017",
-    "OPEN_WEATHER_API_KEY": "f349a9e6c8c8d102a13633d5b80ee760",
-    "MAPBOX_API_KEY" : "pk.eyJ1IjoiYWl0aGF0YXJ1biIsImEiOiJja2NnYTZoMDEwcTk5MzVueHA0MnV0cnk4In0.Is8HmG891aDHhfW4IPLOXA"
+    "OPEN_WEATHER_API_KEY": "",
+    "MAPBOX_API_KEY" : ""
   }
 }
